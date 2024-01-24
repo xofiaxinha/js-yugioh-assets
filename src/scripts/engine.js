@@ -76,6 +76,13 @@ async function drawButton(text){
     state.button.style.display = "block";
 }
 
+function hideDetails(){
+    state.cardSprites.name.innerText = "";
+    state.cardSprites.type.innerText = "";
+    state.cardSprites.avatar.src = "";
+
+}
+
 async function setCardsField(id){
     await removeAllCardsImage();
 
@@ -83,11 +90,12 @@ async function setCardsField(id){
     state.fieldCards.player.style.display = "block";
     state.fieldCards.computer.style.display = "block";
 
+    hideDetails();
+
     state.fieldCards.player.src = cards[id].img;
     state.fieldCards.computer.src = cards[computerCard].img;
 
     let duelResult = await checkDuel(id, computerCard);
-    //console.log(duelResult);
 
     await updateScore();
     await drawButton(duelResult);
@@ -143,6 +151,9 @@ async function drawCards(amount, playername){
 }
 
 function init(){
+    const bgm = document.getElementById("bgm");
+    bgm.volume = 0.3;
+    bgm.play();
     drawCards(5, state.players.player1);
     drawCards(5, state.players.player2);
 }
